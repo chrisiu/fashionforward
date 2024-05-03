@@ -4,7 +4,7 @@ import numpy as np
 
 def display_image(predicted_product):
 
-    data = pd.read_csv('styles.csv', error_bad_lines=False)
+    data = pd.read_csv('styles.csv', on_bad_lines='skip')
     
     product_row = data.loc[data['productDisplayName'] == predicted_product]
 
