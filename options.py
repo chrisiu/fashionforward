@@ -2,7 +2,7 @@ import pandas as pd
 
 def filter_clothing_data():
     try:
-        df = pd.read_csv('styles.csv', error_bad_lines=False)
+        df = pd.read_csv('styles.csv', on_bad_lines='skip')
 
         df = df[df['masterCategory'] == 'Apparel']
 
