@@ -11,7 +11,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 def tree():
-    data = pd.read_csv('styles.csv', error_bad_lines=False)
+    data = pd.read_csv('styles.csv', on_bad_lines='skip')
     imputer = SimpleImputer(strategy='most_frequent')
     data['productDisplayName'] = imputer.fit_transform(data[['productDisplayName']])
 
@@ -86,19 +86,13 @@ def tree():
         'usage': [predictedRow['usage']]
     })
 
-    score = count = 0
-    for key in predicted_df.columns:
-        count += 1
-        if user_input[key].iloc[0] == predicted_df[key].iloc[0]:
-            score += 1
-    score = (score / count) * 100
-    print("Accuracy score based on correct attributes: ", score, "%")
 
-    user_input = preprocessor.fit_transform(user_input)
-    predicted_df = preprocessor.fit_transform(predicted_df)
+    user_input = preprocessor.transform(user_input)
+    predicted_df = preprocessor.transform(predicted_df)
 
     score = cosine_similarity(user_input, predicted_df)
     print("Cosine similarity: ", score[0][0] * 100, "%")
 
     display_image(prediction[0])
+
 
